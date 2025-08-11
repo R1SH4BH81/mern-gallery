@@ -1,0 +1,55 @@
+# Node modules
+node_modules/
+**/node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment variables
+.env
+.env.*.local
+
+# Build output
+dist/
+build/
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Coverage reports
+coverage/
+
+# Cache
+.cache/
+.next/
+.vscode/
+
+# Uploads (if you don't want them in repo)
+uploads/
+
+# Backend specific
+backend/uploads/
+backend/tmp/
+
+# Frontend specific
+frontend/node_modules/
+frontend/.env
+frontend/build/
+
+# Optional: Ignore IDE/project files
+.idea/
+*.iml
+*.sublime-project
+*.sublime-workspace
