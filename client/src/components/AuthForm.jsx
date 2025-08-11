@@ -1,7 +1,5 @@
-// src/components/AuthForm.jsx
 import React, { useState } from "react";
-import API from "../api"; // axios instance
-import "./Authform.css";
+import API from "../api";
 
 export default function AuthForm({ onAuthSuccess }) {
   const [isLogin, setIsLogin] = useState(true);
@@ -20,6 +18,7 @@ export default function AuthForm({ onAuthSuccess }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+
     try {
       if (isLogin) {
         const res = await API.post("/auth/login", {
@@ -42,65 +41,93 @@ export default function AuthForm({ onAuthSuccess }) {
     }
   };
 
+  // Inline styles
+  const containerStyle = {
+    maxWidth: 400,
+    margin: "auto",
+    padding: 20,
+    fontFamily: "Arial, sans-serif",
+  };
+  const inputStyle = {
+    width: "100%",
+    padding: 8,
+    marginBottom: 12,
+    boxSizing: "border-box",
+    borderRadius: 4,
+    border: "1px solid #ccc",
+    fontSize: 14,
+  };
+  const buttonStyle = {
+    width: "100%",
+    padding: 10,
+    backgroundColor: "#4CAF50",
+    color: "white",
+    border: "none",
+    borderRadius: 4,
+    fontSize: 16,
+    cursor: "pointer",
+  };
+  const toggleButtonStyle = {
+    color: "blue",
+    background: "none",
+    border: "none",
+    cursor: "pointer",
+    padding: 0,
+    fontSize: 14,
+    textDecoration: "underline",
+  };
+  const errorStyle = {
+    color: "red",
+    marginTop: 10,
+  };
+  const paragraphStyle = {
+    marginTop: 15,
+    fontSize: 14,
+  };
+
   return (
-    <div className="form-box">
-      <form className="form" onSubmit={handleSubmit}>
-        <span className="title">{isLogin ? "Login" : "Sign up"}</span>
-        <span className="subtitle">
-          {isLogin
-            ? "Enter your credentials to continue."
-            : "Create a free account with your email."}
-        </span>
-
-        <div className="form-container">
-          {!isLogin && (
-            <input
-              type="text"
-              name="username"
-              className="input"
-              placeholder="Full Name"
-              value={form.username}
-              onChange={handleChange}
-              required
-            />
-          )}
+    <div style={containerStyle}>
+      <h2>{isLogin ? "Login" : "Sign Up"}</h2>
+      <form onSubmit={handleSubmit}>
+        {!isLogin && (
           <input
-            type="email"
-            name="email"
-            className="input"
-            placeholder="Email"
-            value={form.email}
+            name="username"
+            value={form.username}
             onChange={handleChange}
+            placeholder="Username"
             required
+            style={inputStyle}
           />
-          <input
-            type="password"
-            name="password"
-            className="input"
-            placeholder="Password"
-            value={form.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <button type="submit">{isLogin ? "Login" : "Sign up"}</button>
+        )}
+        <input
+          type="email"
+          name="email"
+          value={form.email}
+          onChange={handleChange}
+          placeholder="Email"
+          required
+          style={inputStyle}
+        />
+        <input
+          type="password"
+          name="password"
+          value={form.password}
+          onChange={handleChange}
+          placeholder="Password"
+          required
+          style={inputStyle}
+        />
+        <button type="submit" style={buttonStyle}>
+          {isLogin ? "Login" : "Register"}
+        </button>
       </form>
-
-      {error && (
-        <p style={{ color: "red", margin: "10px 0", textAlign: "center" }}>
-          {error}
-        </p>
-      )}
-
-      <div className="form-section">
-        <p>
-          {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
-          <a href="#!" onClick={toggleMode}>
-            {isLogin ? "Sign up" : "Login"}
-          </a>
-        </p>
-      </div>
+      {error && <p style={errorStyle}>{error}</p>}
+      <p style={paragraphStyle}>
+        {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
+        <button onClick={toggleMode} style={toggleButtonStyle}>
+          {isLogin ? "Sign Up" : "Login"}
+        </button>
+      </p>
     </div>
   );
 }
