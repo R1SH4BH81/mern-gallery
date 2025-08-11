@@ -6,13 +6,13 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 const register = async (req, res) => {
   try {
-    const { username, email, passowrd } = req.body;
+    const { username, email, password } = req.body;
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       res.status(400).json({ message: "user exists already!" });
     }
 
-    const hashedPass = await bcrypt.hash(passowrd, 10);
+    const hashedPass = await bcrypt.hash(password, 10);
     const user = new User({ email, username, password: hashedPass });
     await user.save();
     res.status(200).json({ message: "new user created" });
@@ -29,7 +29,7 @@ const login = async (req, res) => {
       res.status(404).json({ message: "user not found pls register" });
     }
 
-    const isMatch = await bcrypt.match(password, findUser.password);
+    const isMatch = await bcrypt.compare(password, findUser.password);
     if (!isMatch) {
       res.status(404).json({ message: "password galat h bhai" });
     }

@@ -13,7 +13,7 @@ const fileSchema = new mongoose.Schema(
     },
     fileType: {
       type: String,
-      enum: ["video", "images"],
+      enum: ["video", "image"],
       required: "true",
     },
     path: {
