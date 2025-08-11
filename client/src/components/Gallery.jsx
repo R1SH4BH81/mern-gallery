@@ -30,7 +30,13 @@ export default function Gallery() {
       }}
     >
       {files.map((file) => {
-        const url = `http://localhost:5000/${file.path.replace(/\\/g, "/")}`;
+        // Extract filename from path (Windows path)
+        const parts = file.path.split("\\");
+        const filename = parts[parts.length - 1]; // get last part
+
+        // Construct URL relative to uploads static folder
+        const url = `http://localhost:5000/uploads/${filename}`;
+
         if (file.fileType === "image") {
           return (
             <img
