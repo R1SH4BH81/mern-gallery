@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import API from "../api";
+import "./Upload.css";
 
 export default function UploadButton({ onUploadSuccess }) {
   const inputRef = useRef(null);
@@ -36,27 +37,37 @@ export default function UploadButton({ onUploadSuccess }) {
         onChange={handleFileChange}
         accept="image/*,video/*"
       />
-      <button
+      <div
         onClick={() => inputRef.current.click()}
         style={{
           position: "fixed",
           bottom: 20,
           right: 20,
-          width: 60,
-          height: 60,
-          borderRadius: "50%",
-          backgroundColor: "#007bff",
-          color: "white",
-          fontSize: 30,
-          border: "none",
-          cursor: "pointer",
-          boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
         }}
         disabled={loading}
         title="Upload Image or Video"
       >
-        +
-      </button>
+        <div className="input-div">
+          <input className="input" name="file" type="file" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="1em"
+            height="1em"
+            strokeLinejoin="round"
+            strokeLinecap="round"
+            viewBox="0 0 24 24"
+            strokeWidth="2"
+            fill="none"
+            stroke="currentColor"
+            className="icon"
+          >
+            <polyline points="16 16 12 12 8 16"></polyline>
+            <line y2="21" x2="12" y1="12" x1="12"></line>
+            <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path>
+            <polyline points="16 16 12 12 8 16"></polyline>
+          </svg>
+        </div>
+      </div>
       {error && (
         <p style={{ color: "red", position: "fixed", bottom: 90, right: 20 }}>
           {error}

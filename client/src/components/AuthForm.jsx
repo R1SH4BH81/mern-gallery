@@ -1,5 +1,7 @@
+// src/components/AuthForm.jsx
 import React, { useState } from "react";
-import API from "../api";
+import API from "../api"; // axios instance
+import "./Authform.css";
 
 export default function AuthForm({ onAuthSuccess }) {
   const [isLogin, setIsLogin] = useState(true);
@@ -18,7 +20,6 @@ export default function AuthForm({ onAuthSuccess }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-
     try {
       if (isLogin) {
         const res = await API.post("/auth/login", {
@@ -42,56 +43,64 @@ export default function AuthForm({ onAuthSuccess }) {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: "auto", padding: 20 }}>
-      <h2>{isLogin ? "Login" : "Sign Up"}</h2>
-      <form onSubmit={handleSubmit}>
-        {!isLogin && (
+    <div className="form-box">
+      <form className="form" onSubmit={handleSubmit}>
+        <span className="title">{isLogin ? "Login" : "Sign up"}</span>
+        <span className="subtitle">
+          {isLogin
+            ? "Enter your credentials to continue."
+            : "Create a free account with your email."}
+        </span>
+
+        <div className="form-container">
+          {!isLogin && (
+            <input
+              type="text"
+              name="username"
+              className="input"
+              placeholder="Full Name"
+              value={form.username}
+              onChange={handleChange}
+              required
+            />
+          )}
           <input
-            name="username"
-            value={form.username}
+            type="email"
+            name="email"
+            className="input"
+            placeholder="Email"
+            value={form.email}
             onChange={handleChange}
-            placeholder="Username"
             required
-            style={{ width: "100%", marginBottom: 10 }}
           />
-        )}
-        <input
-          type="email"
-          name="email"
-          value={form.email}
-          onChange={handleChange}
-          placeholder="Email"
-          required
-          style={{ width: "100%", marginBottom: 10 }}
-        />
-        <input
-          type="password"
-          name="password"
-          value={form.password}
-          onChange={handleChange}
-          placeholder="Password"
-          required
-          style={{ width: "100%", marginBottom: 10 }}
-        />
-        <button type="submit" style={{ width: "100%", padding: 10 }}>
-          {isLogin ? "Login" : "Register"}
-        </button>
+          <input
+            type="password"
+            name="password"
+            className="input"
+            placeholder="Password"
+            value={form.password}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <button type="submit">{isLogin ? "Login" : "Sign up"}</button>
       </form>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <p style={{ marginTop: 15 }}>
-        {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
-        <button
-          onClick={toggleMode}
-          style={{
-            color: "blue",
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-          }}
-        >
-          {isLogin ? "Sign Up" : "Login"}
-        </button>
-      </p>
+
+      {error && (
+        <p style={{ color: "red", margin: "10px 0", textAlign: "center" }}>
+          {error}
+        </p>
+      )}
+
+      <div className="form-section">
+        <p>
+          {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
+          <a href="#!" onClick={toggleMode}>
+            {isLogin ? "Sign up" : "Login"}
+          </a>
+        </p>
+      </div>
     </div>
   );
 }
